@@ -17,7 +17,14 @@ Route::get('/', function () {
 Route::get('foo', function () {
     return view('members.index');
 });
-Route::get('listMember', 'MemberController@getList')->name('listMember');
+Route::get('api/listMember', 'MemberController@getList')->name('listMember');
+
+Route::post('member/{id}', 'MemberController@update')->name('member.update');
+Route::get('member/edit/{id}', 'MemberController@edit')->name('member.edit');
+
+Route::post('addMember', 'MemberController@store')->name('member.store');
+
+Route::post('foo/member', 'MemberController@store');
 
 Auth::routes();
 
