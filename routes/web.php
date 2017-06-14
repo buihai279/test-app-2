@@ -15,5 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('foo', function () {
-    return 'Hello World';
+    return view('members.index');
 });
+Route::get('listMember', 'MemberController@getList')->name('listMember');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
