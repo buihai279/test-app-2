@@ -21,6 +21,7 @@ Route::get('api/listMember', 'MemberController@getList')->name('listMember');
 
 Route::post('member/{id}', 'MemberController@update')->name('member.update');
 Route::get('member/edit/{id}', 'MemberController@edit')->name('member.edit');
+Route::post('member/delete/{id}', 'MemberController@delete')->name('member.delete');
 
 Route::post('addMember', 'MemberController@store')->name('member.store');
 
