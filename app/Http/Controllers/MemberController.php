@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Member;
+use Illuminate\Support\Facades\DB;
 
 class MemberController extends Controller
 {
@@ -14,7 +15,7 @@ class MemberController extends Controller
 
     public function getList()
     {
-    	return Member::get();
+    	return Member::orderBy('updated_at','DESC')->get();
     }
 
     public function update(Request $request, $id)
@@ -22,13 +23,12 @@ class MemberController extends Controller
     	$member= Member::find($id);
     	$member->name=$request->name;
     	$member->address=$request->address;
-    	$member->age=$request->age;
+        $member->age=$request->age;
     	$member->save();
     	return " Member: $request->name updated!!!";
     }
     public function store(Request $request)
     {
-    	// Member::create($request->all());
     	$member=new Member();
     	$member->name=$request->name;
     	$member->address=$request->address;
@@ -40,5 +40,11 @@ class MemberController extends Controller
     public function edit($id)
     {
     	return Member::find($id);
+    }
+    public function delete($id)
+    {
+        // return Member::find($id);
+        DB::table('members')->where('id', '=', $id)->delete();
+        return response()->json('delete successfully');
     }
 }

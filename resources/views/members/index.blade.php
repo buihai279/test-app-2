@@ -37,8 +37,8 @@
                                     <td>@{{member.age}}</td>
                                     <td><img class="img-reponsive" width="100px" src="uploads/@{{member.photo}}"></td>
                                     <td>
-                                        <button type="button" class="btn btn-xs btn-info btn-block" data-toggle="modal" data-target="#editModal" ng-click="editMember($index)">Edit</button>
-                                        <button type="button" class="btn btn-xs btn-danger btn-block" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                                        <button type="button" class="btn btn-xs btn-info btn-block" data-toggle="modal" data-target="#editModal" ng-click="editMember(member.id)">Edit</button>
+                                        <button type="button" class="btn btn-xs btn-danger btn-block" ng-click="btnDelete(member.id)" data-toggle="modal" data-target="#deleteModal">Delete</button>
                                     </td>
                                 </tr>
                         </tbody>
@@ -142,7 +142,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" ng-click="addMember()"><i class="glyphicon glyphicon-floppy-open"></i> Create member</button>
+            <button type="button" class="btn btn-primary" id="btnAdd" ng-click="addMember()"><i class="glyphicon glyphicon-floppy-open"></i> Create member</button>
           </div>
         </div>
       </div>
@@ -159,7 +159,7 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+            <button type="button" class="btn btn-danger" ng-click="deleteMember(idDelete)"><i class="glyphicon glyphicon-trash"></i> Delete</button>
           </div>
 
 

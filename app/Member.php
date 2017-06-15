@@ -10,7 +10,7 @@ class Member extends Model
 
     protected $fillable = ['name','age','address'];
 
-    protected $guarded = ['id','created_at','updated_at'];
+    protected $guarded = ['id'];
 
     public $timestamps = true;
     
