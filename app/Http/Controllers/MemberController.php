@@ -29,6 +29,7 @@ class MemberController extends Controller
     }
     public function store(Request $request)
     {
+        // dd($request->all());
     	$member=new Member();
     	$member->name=$request->name;
     	$member->address=$request->address;
