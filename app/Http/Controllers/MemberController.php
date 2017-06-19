@@ -20,16 +20,23 @@ class MemberController extends Controller
 
     public function update(Request $request, $id)
     {
+        $file = $request->file('photo');
+        if ($file != null) {
+            $fileName = date('Y-m-d', time()).'-'.$file->getClientOriginalName();
+            $path = 'uploads';
+            $file->move($path, $fileName);
+        }
     	$member= Member::find($id);
     	$member->name=$request->name;
     	$member->address=$request->address;
         $member->age=$request->age;
+        $member->photo=$fileName;
     	$member->save();
     	return " Member: $request->name updated!!!";
     }
     public function store(Request $request)
     {
-        // dd($request->all());
+        dd($request);
     	$member=new Member();
     	$member->name=$request->name;
     	$member->address=$request->address;
@@ -47,5 +54,10 @@ class MemberController extends Controller
         // return Member::find($id);
         DB::table('members')->where('id', '=', $id)->delete();
         return response()->json('delete successfully');
+    }
+
+    public function upload(Request $request)
+    {
+        dd($request);
     }
 }
