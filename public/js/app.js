@@ -1,37 +1,38 @@
+var app = angular.module('myApp',[]).constant('API', 'http://localhost/thuctap/test-app-2/public/');
 
+app.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}]);
 
-angular
-    .module('app', ['angularFileUpload'])
-    .controller('AppController', function($scope, FileUploader) {
-        alert(1);
-        $scope.uploader = new FileUploader();
-    });
-
-
-
-    var app = angular.module('myApp',[]).constant('API', 'http://localhost/thuctap/test-app-2/public/');
-
-// app.directive('uploadFile', function(){
-//   return {
-//     restrict: 'A',
-//     link: function(scope, element, attrs) {
-//       element.bind('change',function(event){
-//         console.log(element[0].files[0]);
-//         var uploadUrl = "/fileUpload";
-//         uploadFileToUrl(element[0].files[0], uploadUrl);
-//       });
-//     }
-//   }
-// });
-
-app.controller('myCtrl', function($scope, $http, API) {
+app.controller('ParentCtrl', function( $http,$scope,$log,API,$rootScope) {
 
   $scope.sortType     = 'name'; // set the default sort type
   $scope.sortReverse  = false;  // set the default sort order
   $scope.searchFish   = '';     // set the default search/filter term
 
-
-
+  $rootScope.refreshPage=function () {
+       $http({
+          method : "GET",
+          url : "api/listMember"
+        }).then(function mySuccess(response) {
+            $scope.members = response.data;
+            $scope.sortType     = 'updated_at'; // set the default sort type
+            $scope.sortReverse  = true;  // set the default sort order
+          }, function myError(response) {
+            $scope.members = response.statusText;
+        });
+  }
 
   $http({
     method : "GET",
@@ -41,59 +42,18 @@ app.controller('myCtrl', function($scope, $http, API) {
     }, function myError(response) {
       $scope.members = response.statusText;
   });
-  $scope.editMember=function (index) {
+
+  // edit member
+  $scope.getEditMember=function (index) {
       $http({
         method : "GET",
         url : API+"member/edit/"+index
       }).then(function mySuccess(response) {
-          $scope.member = response.data;
+          $scope.editMember = response.data;
+          $("#newPhoto").val("");
         });
   }
-  $scope.updateMember=function (index) {
-      $http({
-        method:'POST',
-        url: API+'member/'+index,
-        data:$.param($scope.member),
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      }).then(function successCallback(response) {
-        
-         $http({
-          method : "GET",
-          url : "api/listMember"
-        }).then(function mySuccess(response) {
-            $scope.members = response.data;
-          }, function myError(response) {
-            $scope.members = response.statusText;
-        });
-            $('#editModal').modal('hide');
-            
-    }, function errorCallback(response) {
-        alert('This is embarassing. An error has occured. Please check the log for details');
-    });
-
-  }
-  $scope.addMember=function (obj) {
-     $http({
-        method:'POST',
-        url: API+'foo/member',
-        data:$.param(obj),
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      }).then(function (response) {
-        $http({
-          method : "GET",
-          url : "api/listMember",
-        }).then(function mySuccess(response) {
-            $scope.members = response.data;
-          }, function myError(response) {
-            $scope.members = response.statusText;
-        });
-          $('#createModal').modal('hide');
-          $scope.sortType     = 'created_at'; // set the default sort type
-          $scope.sortReverse  = true;  // set the default sort order
-          // console.log(response);
-      }, function (response) {
-        // console.log('error!!!');
-      });
+ 
 
   }
 
@@ -129,3 +89,55 @@ app.controller('myCtrl', function($scope, $http, API) {
 
 });
 
+
+app.controller('myUpdateCtrl', function($scope,$http,$log,API,$rootScope){
+    
+    $scope.updateMember = function(index){
+        var file = $scope.editMember.newPhoto;
+
+        var fd = new FormData();
+        fd.append('photo', file);
+        fd.append("name", $scope.editMember.name);
+        fd.append("address", $scope.editMember.address);
+        fd.append("age", $scope.editMember.age);
+
+        $http.post( API+'member/'+index, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        }).then(function successCallback(response) {
+          // console.log(response);
+           $rootScope.refreshPage();
+        },function errorCallback(response) {
+          console.log(response);
+        });
+
+    };
+    
+});
+
+
+app.controller('myCreateCtrl', function($scope,$http,$log,API,$rootScope){
+    
+     $scope.createMember=function (newMember) {
+
+      var file = $scope.newMember.newPhoto;
+
+        var fd = new FormData();
+        fd.append('photo', file);
+        fd.append("name", $scope.newMember.name);
+        fd.append("address", $scope.newMember.address);
+        fd.append("age", $scope.newMember.age);
+
+        $http.post( API+'foo/member',, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        }).then(function successCallback(response) {
+          // console.log(response);
+           $rootScope.refreshPage();
+        },function errorCallback(response) {
+          console.log(response);
+        });
+
+      }
+    
+});

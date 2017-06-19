@@ -30,3 +30,5 @@ Route::post('foo/member', 'MemberController@store');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/fileUpload', 'MemberController@upload')->name('home');
+ 
