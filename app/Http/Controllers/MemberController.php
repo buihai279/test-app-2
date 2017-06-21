@@ -36,12 +36,17 @@ class MemberController extends Controller
     }
     public function store(Request $request)
     {
-        dd($request);
+        $file = $request->file('photo');
+        if ($file != null) {
+            $fileName = date('Y-m-d', time()).'-'.$file->getClientOriginalName();
+            $path = 'uploads';
+            $file->move($path, $fileName);
+        }
     	$member=new Member();
     	$member->name=$request->name;
     	$member->address=$request->address;
     	$member->age=$request->age;
-    	$member->photo='qqq';
+    	$member->photo=$fileName;
     	$member->save();
     	return response()->json('successfully');
     }

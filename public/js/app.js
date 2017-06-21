@@ -55,7 +55,6 @@ app.controller('ParentCtrl', function( $http,$scope,$log,API,$rootScope) {
   }
  
 
-  }
 
   $scope.deleteMember=function(idDelete){
     // alert(id);
@@ -120,19 +119,20 @@ app.controller('myCreateCtrl', function($scope,$http,$log,API,$rootScope){
     
      $scope.createMember=function (newMember) {
 
-      var file = $scope.newMember.newPhoto;
-
+      var file = $scope.newMember.photo;
+        console.log(newMember);
         var fd = new FormData();
         fd.append('photo', file);
         fd.append("name", $scope.newMember.name);
         fd.append("address", $scope.newMember.address);
         fd.append("age", $scope.newMember.age);
 
-        $http.post( API+'foo/member',, fd, {
+        $http.post( API+'foo/member', fd, {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
-        }).then(function successCallback(response) {
-          // console.log(response);
+        }).then(function successCallback(data) {
+            // console.log(data);
+            $('#createModal').modal('hide')
            $rootScope.refreshPage();
         },function errorCallback(response) {
           console.log(response);
