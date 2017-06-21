@@ -120,7 +120,6 @@ app.controller('myCreateCtrl', function($scope,$http,$log,API,$rootScope){
      $scope.createMember=function (newMember) {
 
       var file = $scope.newMember.photo;
-        console.log(newMember);
         var fd = new FormData();
         fd.append('photo', file);
         fd.append("name", $scope.newMember.name);

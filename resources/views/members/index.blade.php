@@ -101,12 +101,9 @@
                         </tbody>
                     </table>
                 </div>
-                
             </div>
         </div>
     </div>
-
-
     <div ng-include="'modal.htm'"></div>
 </div>
 @endsection
