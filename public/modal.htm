@@ -1,0 +1,117 @@
+  <div ng-controller = "myUpdateCtrl" class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog " role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Edit member: <b>{{editMember.name}}</b></h4>
+            </div>
+        <div class="modal-body">
+           <form novalidate name="myForm">
+                <div class="form-group has-success">
+                  <label class="control-label" >Name</label>
+                  <input type="text" name="name" class="form-control" ng-maxlength=100 required ng-model="editMember.name">
+                  <i class="glyphicon glyphicon-ok text-success" ng-show="myForm.name.$dirty && myForm.name.$valid">
+       </i>
+                  <span class="help-block" ng-show="myForm.name.$dirty && myForm.name.$error.required">Name required!</span>
+                  <span class="help-block" ng-show="myForm.name.$dirty && myForm.name.$error.maxlength">Name max 100 character!</span>
+                </div>
+                <div class="form-group">
+                  <label>Address</label>
+                  <input type="text" class="form-control" name="address" ng-maxlength=300 ng-model="editMember.address" required>
+                  <span class="help-block" ng-show="myForm.name.$dirty && myForm.address.$error.required">Address required!</span>
+                  <span class="help-block" ng-show="myForm.name.$dirty && myForm.address.$error.maxlength">Address max 300 character!</span>
+                </div>
+                <div class="form-group">
+                  <label>Age</label>
+                  <input type="number" ng-maxlength=2 class="form-control" name="age" ng-model="editMember.age" required>
+                  <span class="help-block" ng-show="myForm.name.$dirty && myForm.age.$error.required">Age required!</span>
+                  <span class="help-block" ng-show="myForm.name.$dirty && myForm.age.$error.maxlength">Age max 2 digits</span>
+                </div>
+                <div class="form-group">
+                  <label>Old Photo</label>
+                  <img src="uploads/{{editMember.photo}}"  class="img-reponsive" width="150px">
+                </div>
+                <div class="form-group">
+                  <label>New Photo</label>
+                  <input type="file" file-model="editMember.newPhoto" id="newPhoto">
+                  <p class="help-block">Example block-level help text here.</p>
+                </div>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="updateMember(editMember.id)" ng-disabled="myForm.name.$invalid || myForm.address.$invalid || myForm.age.$invalid">
+            <i class="glyphicon glyphicon-floppy-saved"></i> Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Modal -->
+  <div  ng-controller = "myCreateCtrl" class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Create member</h4>
+        </div>
+        <div class="modal-body">
+              <form novalidate name="newForm">
+                <div class="form-group">
+                  <label>Name</label>
+                  <input type="text" name="name" class="form-control" ng-model="newMember.name" ng-maxlength=100  required >
+                  <span class="help-block" ng-show="myForm.name.$dirty && newForm.name.$error.required">Name required!</span>
+                  <span class="help-block" ng-show="myForm.name.$dirty && newForm.name.$error.maxlength">Name max 100 character!</span>
+                </div>
+                <div class="form-group">
+                  <label>Address</label>
+                  <input type="text" name="address" class="form-control" ng-model="newMember.address" ng-maxlength=300 required>
+                  <span class="help-block" ng-show="myForm.name.$dirty && newForm.address.$error.required">Address required!</span>
+                  <span class="help-block" ng-show="myForm.name.$dirty && newForm.address.$error.maxlength">Address max 300 character!</span>
+                </div>
+                <div class="form-group">
+                  <label>Age</label>
+                  <input type="number" class="form-control" name="age" ng-model="newMember.age" required ng-maxlength=2>
+                  <span class="help-block" ng-show="myForm.name.$dirty && newForm.age.$error.required">Age required!</span>
+                  <span class="help-block" ng-show="myForm.name.$dirty && newForm.age.$error.maxlength">Age max 2 digitals!</span>
+                </div>
+                <div class="form-group">
+                  <label >Photo</label>
+                  <input type="file" file-model="newMember.photo" id="photo">
+                  <p class="help-block">Example block-level help text here.</p>
+                </div>
+
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="btnAdd" ng-click="createMember(newMember)" ng-disabled="newForm.name.$invalid || newForm.address.$invalid || newForm.age.$invalid|| newForm.photo.$invalid" " >
+            <i class="glyphicon glyphicon-floppy-open"></i> Create member
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade " id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">You want delete?</h4>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" ng-click="deleteMember(idDelete)"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
