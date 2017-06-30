@@ -20,7 +20,8 @@ class MemberControllerTest extends TestCase
 
     use DatabaseMigrations;
     use WithoutMiddleware;
-    use DatabaseTransactions;
+    // use DatabaseTransactions;
+
     public function testEditMember()
     {
         $member = factory(Member::class)->create();
@@ -35,26 +36,32 @@ class MemberControllerTest extends TestCase
             'address' => 'HN',
             'photo' => UploadedFile::fake()->image('avatar.jpg'),
             ];
+
+        // print_r($member);
         $response = $this->call('POST', 'addMember',$array);
-         $this->assertEquals(200, $response->status());
-        // $response->assertStatus(200);
-
-
-
-         $response = $this->json('POST', '/addMember', [
-            'photo' => UploadedFile::fake()->image('avatar.jpg')
-        ]);
-
-        // Assert the file was stored...
-        // Storage::disk('avatars')->assertExists('avatar.jpg');
-         // Storage::disk('avatars')->assertMissing('missing.jpg');
-
-
-
+        $this->assertEquals(200, $response->status());
     }
-    // public function testDeleteMember()
-    // {
-    //     $response = $this->call('GET', 'member/delete/1');
-    //     $response->assertStatus(200);
-    // }
+    public function testDeleteMember()
+    {
+        $member = factory(Member::class)->create();
+        $response = $this->call('POST', 'member/delete/'.$member->id);
+        $response->assertStatus(200);
+    }
+    public function testUpdateMember()
+    {
+        $array=[
+            'name' => 'hiha',
+            'age' => '22',
+            'address' => 'HN',
+            'photo' => UploadedFile::fake()->image('avatar.jpg'),
+            ];
+        $member = factory(Member::class)->create();
+        $response = $this->call('POST', 'member/'.$member->id,$array);
+        $this->assertEquals(200, $response->status());
+    }
+    public function testIndexMember()
+    {
+        $response = $this->call('GET', 'members/');
+        $this->assertEquals(200, $response->status());
+    }
 }

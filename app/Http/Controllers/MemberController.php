@@ -13,7 +13,6 @@ class MemberController extends Controller
 {
     public function index()
     {
-        // dd(UploadedFile::fake()->image('avatar.jpg')) ;
     	return view('members.index');
     }
 
@@ -39,7 +38,6 @@ class MemberController extends Controller
     }
     public function store(Request $request)
     {
-        // dd($request->file('photo')->getClientOriginalName());
         $fileName ='';
         if($request->file('photo')):
             $fileName = date('Y-m-d', time()).'-'.$request->file('photo')->getClientOriginalName();
@@ -59,7 +57,6 @@ class MemberController extends Controller
     }
     public function delete($id)
     {
-        // return Member::find($id);
         DB::table('members')->where('id', '=', $id)->delete();
         return response()->json('delete successfully');
     }

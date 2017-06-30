@@ -10,6 +10,7 @@
 | database. Just tell the factory how a default model should look.
 |
 */
+use Illuminate\Http\UploadedFile;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\User::class, function (Faker\Generator $faker) {
@@ -27,6 +28,6 @@ $factory->define(App\Member::class, function (Faker\Generator $faker) {
         'name' => $faker->name,
         'address' => $faker->address,
         'age' => 2,
-        'photo' => '222',
+        'photo' => UploadedFile::fake()->image('avatar.jpg'),
     ];
 });
