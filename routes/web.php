@@ -14,9 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('foo', function () {
-    return view('members.index');
-});
+Route::get('members','MemberController@index')->name('member.index');
 Route::get('api/listMember', 'MemberController@getList')->name('listMember');
 
 Route::post('member/{id}', 'MemberController@update')->name('member.update');
@@ -25,7 +23,7 @@ Route::post('member/delete/{id}', 'MemberController@delete')->name('member.delet
 
 Route::post('addMember', 'MemberController@store')->name('member.store');
 
-Route::post('foo/member', 'MemberController@store');
+Route::post('members/add', 'MemberController@store');
 
 Auth::routes();
 
