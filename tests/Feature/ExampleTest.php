@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Member;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -15,9 +16,6 @@ class ExampleTest extends TestCase
      * @return void
      */
     public function testBasicTest()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+    {  
     }
 }

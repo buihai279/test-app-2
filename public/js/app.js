@@ -126,7 +126,7 @@ app.controller('myCreateCtrl', function($scope,$http,$log,API,$rootScope){
         fd.append("address", $scope.newMember.address);
         fd.append("age", $scope.newMember.age);
 
-        $http.post( API+'foo/member', fd, {
+        $http.post( API+'members/add', fd, {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         }).then(function successCallback(data) {

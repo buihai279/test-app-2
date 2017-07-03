@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use App\Member;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
 
 class MemberController extends Controller
 {
     public function index()
     {
-    	# code...
+    	return view('members.index');
     }
 
     public function getList()
@@ -20,12 +23,11 @@ class MemberController extends Controller
 
     public function update(Request $request, $id)
     {
-        $file = $request->file('photo');
-        if ($file != null) {
-            $fileName = date('Y-m-d', time()).'-'.$file->getClientOriginalName();
-            $path = 'uploads';
-            $file->move($path, $fileName);
-        }
+        $fileName ='';
+        if($request->file('photo')):
+            $fileName = date('Y-m-d', time()).'-'.$request->file('photo')->getClientOriginalName();
+            Storage::put('photo/'.$fileName, file_get_contents($request->file('photo')));
+        endif;
     	$member= Member::find($id);
     	$member->name=$request->name;
     	$member->address=$request->address;
@@ -36,12 +38,11 @@ class MemberController extends Controller
     }
     public function store(Request $request)
     {
-        $file = $request->file('photo');
-        if ($file != null) {
-            $fileName = date('Y-m-d', time()).'-'.$file->getClientOriginalName();
-            $path = 'uploads';
-            $file->move($path, $fileName);
-        }
+        $fileName ='';
+        if($request->file('photo')):
+            $fileName = date('Y-m-d', time()).'-'.$request->file('photo')->getClientOriginalName();
+            Storage::put('photo/'.$fileName, file_get_contents($request->file('photo')));
+        endif;
     	$member=new Member();
     	$member->name=$request->name;
     	$member->address=$request->address;
@@ -56,7 +57,6 @@ class MemberController extends Controller
     }
     public function delete($id)
     {
-        // return Member::find($id);
         DB::table('members')->where('id', '=', $id)->delete();
         return response()->json('delete successfully');
     }

@@ -92,7 +92,7 @@
                                 <td>@{{member.name}}</td>
                                 <td>@{{member.address}}</td>
                                 <td>@{{member.age}}</td>
-                                <td><img class="img-reponsive" width="100px" src="uploads/@{{member.photo}}"></td>
+                                <td><img class="img-reponsive" width="100px" src="../storage/app/photo/@{{member.photo}}"></td>
                                 <td>
                                     <button type="button" class="btn btn-xs btn-info btn-block" data-toggle="modal" data-target="#editModal" ng-click="getEditMember(member.id)">Edit</button>
                                     <button type="button" class="btn btn-xs btn-danger btn-block" ng-click="btnDelete(member.id)" data-toggle="modal" data-target="#deleteModal">Delete</button>
