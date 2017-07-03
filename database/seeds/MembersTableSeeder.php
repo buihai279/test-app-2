@@ -11,12 +11,10 @@ class MembersTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=1; $i <= 51; $i++) { 
-        	
-        	DB::table('members')->insert(
-			    ['name' => 'user name '.$i, 'address' => 'street 1 , address '.rand(0,99),'age'=>rand(15,30),'photo'=>$i.'.png','created_at'=> new DateTime(),'updated_at'=> new DateTime()]
-			);
-
+        for ($i=1; $i <= 20; $i++) {
+            DB::table('members')->insert(
+                ['name' => rand_string(8, 'abcdefghijklmnopqrstuvwxyz'), 'address' => 'street 1 , address '.substr(md5(rand()), 0, 5),'age'=>rand(15, 30),'photo'=>$i.'.png','created_at'=> new DateTime(),'updated_at'=> new DateTime()]
+            );
         }
     }
 }

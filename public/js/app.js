@@ -30,6 +30,7 @@ app.controller('ParentCtrl', function( $http,$scope,$log,API,$rootScope) {
             $scope.sortType     = 'updated_at'; // set the default sort type
             $scope.sortReverse  = true;  // set the default sort order
           }, function myError(response) {
+            $scope.errors=response;
             $scope.members = response.statusText;
         });
   }
@@ -57,14 +58,12 @@ app.controller('ParentCtrl', function( $http,$scope,$log,API,$rootScope) {
 
 
   $scope.deleteMember=function(idDelete){
-    // alert(id);
     $http({
       method:'POST',
       url:API+'member/delete/'+idDelete,
        data:$.param($scope.idDelete),
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).then(function (response) {
-          // console.log(response);
             $http({
               method : "GET",
               url : "api/listMember"
@@ -74,8 +73,11 @@ app.controller('ParentCtrl', function( $http,$scope,$log,API,$rootScope) {
                 $scope.members = response.statusText;
             });
             $('#deleteModal').modal('hide');
+            alert('Delete success!');
       }, function (response) {
-        // console.log(response);
+            alert('Delete error!');
+            $scope.errors=response;
+          alert(response);
       });
   }
   $scope.btnDelete=function (id) {
@@ -104,9 +106,12 @@ app.controller('myUpdateCtrl', function($scope,$http,$log,API,$rootScope){
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         }).then(function successCallback(response) {
-          // console.log(response);
+            alert('Update success!');
            $rootScope.refreshPage();
+           $('#editModal').modal('hide')
         },function errorCallback(response) {
+            alert('Update error!');
+            $scope.errors=response;
           console.log(response);
         });
 
@@ -130,13 +135,16 @@ app.controller('myCreateCtrl', function($scope,$http,$log,API,$rootScope){
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         }).then(function successCallback(data) {
-            // console.log(data);
+            alert('Update success!');
             $('#createModal').modal('hide')
            $rootScope.refreshPage();
         },function errorCallback(response) {
+            $scope.errors=response;
+            alert(response);
           console.log(response);
         });
 
+        $scope.newMember ={};
+        $scope.newMember.photo =null;
       }
-    
 });
