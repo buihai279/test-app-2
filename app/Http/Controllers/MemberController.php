@@ -25,13 +25,13 @@ class MemberController extends Controller
     public function update(UpdateMember $request, $id)
     {
         $fileName ='';
-        if ($request->file('photo')):
+        if ($request->file('photo')){
              $this->validate($request, [
                 'photo' => 'mimes:jpeg,jpg,png,gif|max:10240',
             ]);
-        $fileName = date('Y-m-d', time()).'-'.$request->file('photo')->getClientOriginalName();
-        Storage::put('photo/'.$fileName, file_get_contents($request->file('photo')));
-        endif;
+            $fileName = date('Y-m-d', time()).'-'.$request->file('photo')->getClientOriginalName();
+            Storage::put('photo/'.$fileName, file_get_contents($request->file('photo')));
+        }
         $member= Member::find($id);
         $member->name=$request->name;
         $member->address=$request->address;
@@ -39,6 +39,7 @@ class MemberController extends Controller
         if ($fileName!='') {
             $member->photo=$fileName;
         }
+        $member->updated_at=time();
         $member->save();
         return " Member: $request->name updated!!!";
     }
@@ -58,6 +59,8 @@ class MemberController extends Controller
         $member->age=$request->age;
         if ($fileName!='') {
             $member->photo=$fileName;
+        }else{
+            $member->photo=null;
         }
         $member->save();
         return response('Successfully', 200)

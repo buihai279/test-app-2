@@ -1,0 +1,70 @@
+  <div ng-controller = "myUpdateCtrl" class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog " role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="closeFormUpdate()" ><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Edit member: <b>{{editMember.name}}</b></h4>
+        </div>
+        <div class="modal-body">
+            <h4 ng-show="errors" class="text-danger error-update">
+              Update error!!!
+            </h4>
+           <form novalidate name="editForm">
+                <div class="form-group" >
+                  <label class="control-label" >Name</label>
+                  <input type="text" name="name" class="form-control" ng-pattern="/^[a-zA-Z\s]*$/" ng-maxlength=100 required ng-model="editMember.name" >
+                  <span class="text-danger" ng-show="editForm.name.$dirty && editForm.name.$error.required">Name required!</span>
+                  <span class="text-danger" ng-show="editForm.name.$dirty && editForm.name.$error.maxlength">Name max 100 character!</span>
+                  <span class="text-danger" ng-show="editForm.name.$dirty && editForm.name.$error.pattern">Only include alphabetic characters </span>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">Address</label>
+                  <input type="text" class="form-control" name="address" ng-pattern="/^[a-zA-Z\s]*$/" ng-maxlength=300 ng-model="editMember.address" required>
+                  <span class="text-danger" ng-show="editForm.address.$dirty && editForm.address.$error.required">Address required!</span>
+                  <span class="text-danger" ng-show="editForm.address.$dirty && editForm.address.$error.maxlength">Address max 300 character!</span>
+                  <span class="text-danger" ng-show="editForm.address.$dirty && editForm.address.$error.pattern">Only include alphabetic characters </span>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">Age</label>
+                  <input type="number" ng-maxlength=2 class="form-control" name="age" ng-model="editMember.age" required>
+                  <span class="text-danger" ng-show="editForm.age.$dirty && editForm.age.$error.required">Age required!</span>
+                  <span class="text-danger" ng-show="editForm.age.$dirty && editForm.age.$error.maxlength">Age max 2 digits</span>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">Old Photo</label>
+                  <img src="../storage/app/photo/{{editMember.photo}}" ng-hide="editMember.photo == null||editMember.photo == ''" class="img-reponsive" width="150px">
+                </div>
+                <div class="form-group">
+                  <label class="control-label">New Photo</label>
+                  <input type="file" file-model="editMember.newPhoto" id="newPhoto" accept="image/*"   name="photo"  ng-class="{' has-error': newForm.photo.$dirty && newForm.photo.$invalid} " accept="image/*" onchange="angular.element(this).scope().uploadImageUpdate(this.files)" >
+                 
+                    <span class="text-danger validate-photo-update" ></span>
+                </div>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" ng-click="closeFormUpdate()" >Close</button>
+          <button type="button" class="btn btn-primary" ng-click="updateMember(editMember.id)" ng-disabled="editForm.name.$invalid || editForm.address.$invalid || editForm.age.$invalid" id="btnUpdate">
+            <i class="glyphicon glyphicon-floppy-saved"></i> Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade " id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">You want delete?</h4>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" ng-click="deleteMember(idDelete)"><i class="glyphicon glyphicon-trash"></i> Delete</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
