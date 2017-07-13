@@ -18,7 +18,7 @@
                 <form novalidate name="newForm" id="resetme">
                   <div class="form-group "  ng-class="{' has-error': newForm.name.$dirty && newForm.name.$invalid} ">
                     <label class="control-label">Name</label>
-                    <input type="text" name="name" class="form-control" ng-pattern="/^[a-zA-Z\s]*$/" ng-model="newMember.name" ng-maxlength=100  required >
+                    <input type="text" name="name" class="form-control" ng-pattern="/^[a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]*$/" ng-model="newMember.name" ng-maxlength=100  required > 
                     <span class="text-danger" ng-show="newForm.name.$dirty && newForm.name.$error.required">Name required!</span>
                     <span class="text-danger" ng-show="newForm.name.$dirty && newForm.name.$error.maxlength">Name max 100 character!</span>
                     <span class="text-danger" ng-show="newForm.name.$dirty && newForm.name.$error.pattern">Only include alphabetic characters </span>
