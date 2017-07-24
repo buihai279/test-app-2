@@ -15,11 +15,8 @@ class UserTest extends TestCase
      */
     public function testExample()
     {
-        $this->assertTrue(true);
     }
     public function testPushAndPop()
     {
-        $stack = [];
-        $this->assertEquals(0, count($stack));
     }
 }

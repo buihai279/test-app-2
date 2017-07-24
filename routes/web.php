@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,23 +9,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('members','MemberController@index')->name('member.index');
+Route::get('members', 'MemberController@index')->name('member.index');
 Route::get('api/listMember', 'MemberController@getList')->name('listMember');
-
 Route::post('member/{id}', 'MemberController@update')->name('member.update');
 Route::get('member/edit/{id}', 'MemberController@edit')->name('member.edit');
 Route::post('member/delete/{id}', 'MemberController@delete')->name('member.delete');
-
 Route::post('addMember', 'MemberController@store')->name('member.store');
-
 Route::post('members/add', 'MemberController@store');
-
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/fileUpload', 'MemberController@upload')->name('home');
- 

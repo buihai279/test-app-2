@@ -16,17 +16,5 @@ class AuthTest extends TestCase
      */
     public function testLogin()
     {
-        $response = $this->call('GET', '/login');
-        $this->assertEquals(200, $response->status());
     }
-    // public function testRegister()
-    // {
-    //     $response = $this->call('GET', '/login');
-    //     $this->assertEquals(200, $response->status());
-    // }
-    // public function testRedirect()
-    // {
-    //     $response = $this->call('GET', '/login');
-    //     $this->assertEquals(200, $response->status());
-    // }
 }

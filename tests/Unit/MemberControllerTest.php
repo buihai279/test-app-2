@@ -10,6 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
+
 class MemberControllerTest extends TestCase
 {
     /**
@@ -30,15 +31,15 @@ class MemberControllerTest extends TestCase
     }
     public function testAddMember()
     {
+        $name='small-image.jpg';
+        $path=dirname(__FILE__).'\\'.$name;
         $array=[
             'name' => 'hiha',
             'age' => '22',
             'address' => 'HN',
-            'photo' => UploadedFile::fake()->image('avatar.jpg'),
+            'photo' =>  new UploadedFile($path, $name, filesize($path), 'image/png', null, true)
             ];
-
-        // print_r($member);
-        $response = $this->call('POST', 'addMember',$array);
+        $response = $this->call('POST', 'addMember', $array);
         $this->assertEquals(200, $response->status());
     }
     public function testDeleteMember()
@@ -49,14 +50,16 @@ class MemberControllerTest extends TestCase
     }
     public function testUpdateMember()
     {
+        $name='small-image.jpg';
+        $path=dirname(__FILE__).'\\'.$name;
         $array=[
             'name' => 'hiha',
             'age' => '22',
             'address' => 'HN',
-            'photo' => UploadedFile::fake()->image('avatar.jpg'),
+            'photo' =>  new UploadedFile($path, $name, filesize($path), 'image/png', null, true)
             ];
         $member = factory(Member::class)->create();
-        $response = $this->call('POST', 'member/'.$member->id,$array);
+        $response = $this->call('POST', 'member/'.$member->id, $array);
         $this->assertEquals(200, $response->status());
     }
     public function testIndexMember()
